@@ -20,12 +20,9 @@ export default async function handler(
 
   // Pull the updated value out and send it back.
   const trackSnapshot = await db.ref(`/tracks/${trackId}`).once('value');
-  const [trackData] = Object.values(
-    trackSnapshot.val() as Record<
-      string,
-      TrackEntryData | LegacyTrackEntryData
-    >,
-  ).map(beatportTrack);
+  const trackData = beatportTrack(
+    trackSnapshot.val() as TrackEntryData | LegacyTrackEntryData,
+  );
 
   res.status(200).json(trackData);
 }
