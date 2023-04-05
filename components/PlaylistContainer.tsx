@@ -11,7 +11,7 @@ import {
   SPOTIFY_PAGINATION_LIMIT,
 } from '@src/constants';
 import fetcher from '@src/lib/fetch';
-import { updatePlaylistTrack } from '@src/lib/requests';
+import { getPlaylistTracksKey, updatePlaylistTrack } from '@src/lib/requests';
 import { formatTrackDisplayName } from '@src/normalizers/trackDisplayName';
 import { GetPlaylistTracksResponse } from '@src/types/requests';
 import {
@@ -22,25 +22,9 @@ import type { SpotifyTrack } from '@src/types/tracks';
 
 import PlaylistTracks from './PlaylistTracks';
 
-const getKey = (
-  pageIndex: number,
-  previousPageData: GetPlaylistTracksResponse,
-) => {
-  // this page doesn't have any data. we're done.
-  if (previousPageData && previousPageData.tracks.length === 0) return null;
-
-  // first page, we don't have `previousPageData`
-  if (pageIndex === 0) {
-    return `/api/spotify/getPlaylistTracks?limit=${SPOTIFY_PAGINATION_LIMIT}`;
-  }
-
-  // add the offset to the endpoint and send it.
-  return `/api/spotify/getPlaylistTracks?offset=${previousPageData.nextOffset}&limit=${SPOTIFY_PAGINATION_LIMIT}`;
-};
-
 const PlaylistContainer = () => {
   const { data, error, isLoading, mutate } =
-    useSWRInfinite<GetPlaylistTracksResponse>(getKey, fetcher, {
+    useSWRInfinite<GetPlaylistTracksResponse>(getPlaylistTracksKey, fetcher, {
       initialSize: SPOTIFY_PAGINATION_LIMIT,
       revalidateAll: true,
     });
