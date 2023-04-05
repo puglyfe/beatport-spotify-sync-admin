@@ -1,3 +1,5 @@
+import { SWRInfiniteKeyLoader } from 'swr/infinite';
+
 import { SPOTIFY_PAGINATION_LIMIT } from '@src/constants';
 import type {
   AddPlaylistTrackRequest,
@@ -76,20 +78,24 @@ const updatePlaylistTrack = async (
 // Request utilities
 //////////////////////////////
 
-const getPlaylistTracksKey = (
-  pageIndex: number,
-  previousPageData: GetPlaylistTracksResponse,
+const getPlaylistTracksKey: SWRInfiniteKeyLoader<GetPlaylistTracksResponse> = (
+  pageIndex,
+  previousPageData,
 ) => {
-  // this page doesn't have any data. we're done.
-  if (previousPageData && previousPageData.tracks.length === 0) return null;
+  if (previousPageData) {
+    // this page doesn't have any data. we're done.
+    if (previousPageData.tracks.length === 0) return null;
+
+    // add the offset to the endpoint and send it.
+    return `/api/spotify/getPlaylistTracks?offset=${previousPageData.nextOffset}&limit=${SPOTIFY_PAGINATION_LIMIT}`;
+  }
 
   // first page, we don't have `previousPageData`
   if (pageIndex === 0) {
     return `/api/spotify/getPlaylistTracks?limit=${SPOTIFY_PAGINATION_LIMIT}`;
   }
 
-  // add the offset to the endpoint and send it.
-  return `/api/spotify/getPlaylistTracks?offset=${previousPageData.nextOffset}&limit=${SPOTIFY_PAGINATION_LIMIT}`;
+  return null;
 };
 
 export type { UpdateTrackEntryArg };

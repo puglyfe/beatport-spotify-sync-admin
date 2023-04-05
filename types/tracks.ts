@@ -10,9 +10,26 @@ export interface BeatportTrack extends ITrack {
 }
 
 export type TrackEntryData = {
-  id: string;
+  spotifyPlaylistSnapshotId?: string;
   spotifyUri?: string;
-  track: BeatportTrack;
+  track: {
+    artists: string;
+    name: string;
+    item: string;
+    price?: string;
+  };
+};
+
+export type LegacyTrackEntryData = {
+  spotifyPlaylistSnapshotId?: string;
+  spotifyUri?: string;
+  track: {
+    Artists: string;
+    Name: string;
+    Item: string;
+    Label?: string;
+    Price?: string;
+  };
 };
 
 export type TrackEntry = Record<string, TrackEntryData>;
