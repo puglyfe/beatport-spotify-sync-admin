@@ -12,10 +12,8 @@ export default async function handler(
   // Some day I'll implement retries (jk no I won't).
   await refreshAccessToken();
 
-  const {
-    context_uri = `spotify:playlist:${SPOTIFY_PLAYLIST_ID}`,
-    uri = 'spotify:track:3ltuhIzv9rA6mnqga6WwjY',
-  } = req.body;
+  const { context_uri = `spotify:playlist:${SPOTIFY_PLAYLIST_ID}`, uri } =
+    req.body;
 
   const response = await spotifyClient.play({
     context_uri,
