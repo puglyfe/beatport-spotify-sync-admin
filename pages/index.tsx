@@ -1,4 +1,4 @@
-import { Group, Header, SimpleGrid } from '@mantine/core';
+import { Container, Group, Header, SimpleGrid } from '@mantine/core';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 
@@ -24,10 +24,12 @@ export default function Home() {
       </Header>
       <main>
         {session ? (
-          <SimpleGrid cols={2}>
-            <PlaylistContainer />
-            <OrphanTracksContainer />
-          </SimpleGrid>
+          <Container size="xl">
+            <SimpleGrid cols={2}>
+              <PlaylistContainer />
+              <OrphanTracksContainer />
+            </SimpleGrid>
+          </Container>
         ) : (
           <p>You&apos;re not logged in.</p>
         )}
