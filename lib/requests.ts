@@ -74,6 +74,24 @@ const updatePlaylistTrack = async (
   return await res.json();
 };
 
+const playTrack = async (
+  url: string,
+  { arg: { uri } }: { arg: { uri: string } },
+) => {
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify({ uri }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  // Spotify returns 204 on success.
+  // 204 means "No Content", which throws an error when trying to parse as JSON, so we return an empty string.
+  if (response.status === 204) return '';
+  return await response.json();
+};
+
 //////////////////////////////
 // Request utilities
 //////////////////////////////
@@ -103,6 +121,7 @@ export type { UpdateTrackEntryArg };
 export {
   addTrackToPlaylist,
   getPlaylistTracksKey,
+  playTrack,
   searchTrack,
   updatePlaylistTrack,
   updateTrackEntry,

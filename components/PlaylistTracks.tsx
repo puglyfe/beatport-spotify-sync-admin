@@ -4,9 +4,12 @@ import {
   Group,
   List,
   MantineTheme,
+  UnstyledButton,
 } from '@mantine/core';
 import { IconPencil } from '@tabler/icons-react';
+import useSWRMutation from 'swr/mutation';
 
+import { playTrack } from '@src/lib/requests';
 import { formatTrackDisplayName } from '@src/normalizers/trackDisplayName';
 import { SpotifyTrack } from '@src/types/tracks';
 
@@ -25,6 +28,11 @@ const buttonStyles = (theme: MantineTheme): CSSObject => ({
 });
 
 const PlaylistTracks = ({ onEditTrack, tracks }: PlaylistTracksProps) => {
+  const { trigger: triggerPlayTrack } = useSWRMutation(
+    '/api/spotify/player/play',
+    playTrack,
+  );
+
   if (!tracks.length) return <p>No tracks.</p>;
 
   return (
@@ -32,13 +40,18 @@ const PlaylistTracks = ({ onEditTrack, tracks }: PlaylistTracksProps) => {
       {tracks.map((track, index) => (
         <List.Item key={track.id}>
           <Group spacing="sm" noWrap>
-            {/* We're getting the smallest possible image from Spotify API, so no reason to go nuts w optimizations here. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={track.image}
-              alt={`Cover art for ${track.name}`}
-              style={{ maxWidth: '2rem' }}
-            />
+            <UnstyledButton
+              onClick={() => triggerPlayTrack({ uri: track.uri })}
+              title={`Play ${track.name}`}
+            >
+              {/* We're getting the smallest possible image from Spotify API, so no reason to go nuts w optimizations here. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={track.image}
+                alt={`Cover art for ${track.name}`}
+                style={{ maxWidth: '2rem' }}
+              />
+            </UnstyledButton>
             <span>{formatTrackDisplayName(track)}</span>
             <ActionIcon
               onClick={() => onEditTrack(track, index)}
