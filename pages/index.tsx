@@ -24,7 +24,7 @@ export default function Home() {
       </Header>
       <main>
         {session ? (
-          <Container size="xl">
+          <Container py="xl" size="xl">
             <SimpleGrid cols={2}>
               <PlaylistContainer />
               <OrphanTracksContainer />

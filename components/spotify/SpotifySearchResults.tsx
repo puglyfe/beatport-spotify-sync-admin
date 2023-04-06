@@ -38,7 +38,7 @@ const SpotifySearchResults = ({
   if (!hasSearched || isLoading) return null;
 
   return (
-    <Box mt="md" component={ScrollArea} mah="40vh">
+    <Box mt="md" component={ScrollArea.Autosize} mah="40vh">
       {tracks.length ? (
         <List listStyleType="none">
           {tracks.map((track) => (
