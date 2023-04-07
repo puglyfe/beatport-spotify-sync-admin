@@ -1,4 +1,4 @@
-import { Modal } from '@mantine/core';
+import { Loader, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import useSWR, { Key } from 'swr';
@@ -83,19 +83,15 @@ const OrphanTracksContainer = () => {
   return (
     <div>
       <h2>Orphan Tracks</h2>
-      {isLoading ? (
-        <p>Loading…</p>
-      ) : (
-        <>
-          <OrphanTracks tracks={data ?? []} onEditTrack={onEditTrack} />
-          <Modal opened={opened} onClose={onClose} title="Add Track" centered>
-            <SpotifyTrackSearch
-              initialValues={initialSearchValues}
-              onTrackSelect={onTrackSelect}
-            />
-          </Modal>
-        </>
-      )}
+      <OrphanTracks tracks={data ?? []} onEditTrack={onEditTrack} />
+      {isLoading ? <Loader variant="bars" /> : null}
+      {!isLoading && data?.length === 0 ? <p>No tracks...</p> : null}
+      <Modal opened={opened} onClose={onClose} title="Add Track" centered>
+        <SpotifyTrackSearch
+          initialValues={initialSearchValues}
+          onTrackSelect={onTrackSelect}
+        />
+      </Modal>
     </div>
   );
 };

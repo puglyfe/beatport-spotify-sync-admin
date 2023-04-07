@@ -33,8 +33,6 @@ const PlaylistTracks = ({ onEditTrack, tracks }: PlaylistTracksProps) => {
     playTrack,
   );
 
-  if (!tracks.length) return <p>No tracks.</p>;
-
   return (
     <List type="ordered">
       {tracks.map((track, index) => (

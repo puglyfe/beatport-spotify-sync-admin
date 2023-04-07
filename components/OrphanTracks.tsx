@@ -25,8 +25,6 @@ const buttonStyles = (theme: MantineTheme): CSSObject => ({
 });
 
 const OrphanTracks = ({ onEditTrack, tracks = [] }: OrphanTracksProps) => {
-  if (!tracks.length) return <p>No tracks.</p>;
-
   return (
     <List listStyleType="none">
       {tracks.map((track) => (

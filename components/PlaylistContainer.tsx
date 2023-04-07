@@ -1,4 +1,4 @@
-import { Modal } from '@mantine/core';
+import { Loader, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import type { Key } from 'swr';
@@ -88,28 +88,24 @@ const PlaylistContainer = () => {
   return (
     <div>
       <h2>Spotify Playlist</h2>
-      {isLoading ? (
-        <p>Loading…</p>
-      ) : (
-        <>
-          <PlaylistTracks tracks={tracks ?? []} onEditTrack={onEditTrack} />
-          <Modal
-            opened={opened}
-            onClose={onClose}
-            title={
-              trackToReplace
-                ? `Replace ${formatTrackDisplayName(trackToReplace)}`
-                : 'Replace Track'
-            }
-            centered
-          >
-            <SpotifyTrackSearch
-              initialValues={initialSearchValues}
-              onTrackSelect={onTrackSelect}
-            />
-          </Modal>
-        </>
-      )}
+      <PlaylistTracks tracks={tracks ?? []} onEditTrack={onEditTrack} />
+      {isLoading ? <Loader variant="bars" /> : null}
+      {!isLoading && tracks?.length === 0 ? <p>No tracks...</p> : null}
+      <Modal
+        opened={opened}
+        onClose={onClose}
+        title={
+          trackToReplace
+            ? `Replace ${formatTrackDisplayName(trackToReplace)}`
+            : 'Replace Track'
+        }
+        centered
+      >
+        <SpotifyTrackSearch
+          initialValues={initialSearchValues}
+          onTrackSelect={onTrackSelect}
+        />
+      </Modal>
     </div>
   );
 };
