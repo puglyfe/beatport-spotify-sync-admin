@@ -6,8 +6,6 @@ import {
   AddPlaylistTrackResponse,
 } from '@src/types/requests';
 
-const { SPOTIFY_PLAYLIST_ID } = process.env;
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<AddPlaylistTrackResponse>,
@@ -16,7 +14,7 @@ export default async function handler(
   // Some day I'll implement retries (jk no I won't).
   await refreshAccessToken();
 
-  const { playlistId = SPOTIFY_PLAYLIST_ID!, uri } =
+  const { playlistId = process.env.SPOTIFY_PLAYLIST_ID, uri } =
     req.body as AddPlaylistTrackRequest;
 
   const response = await spotifyClient.addTracksToPlaylist(playlistId, [uri], {

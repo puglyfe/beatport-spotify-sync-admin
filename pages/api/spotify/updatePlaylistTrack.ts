@@ -6,8 +6,6 @@ import {
   ReplacePlaylistTracksResponse,
 } from '@src/types/requests';
 
-const { SPOTIFY_PLAYLIST_ID } = process.env;
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ReplacePlaylistTracksResponse>,
@@ -18,7 +16,7 @@ export default async function handler(
   spotifyClient.setAccessToken(accessTokenResponse.body['access_token']);
 
   const {
-    playlistId = SPOTIFY_PLAYLIST_ID!,
+    playlistId = process.env.SPOTIFY_PLAYLIST_ID,
     oldTrack,
     newTrack,
     position = 0,

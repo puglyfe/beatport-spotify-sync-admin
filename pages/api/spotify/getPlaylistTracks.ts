@@ -5,8 +5,6 @@ import spotifyClient from '@src/lib/spotify';
 import { spotifyTrack } from '@src/normalizers/track';
 import type { GetPlaylistTracksResponse } from '@src/types/requests';
 
-const { SPOTIFY_PLAYLIST_ID } = process.env;
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GetPlaylistTracksResponse>,
@@ -20,7 +18,7 @@ export default async function handler(
 
   // Get the playlist.
   const { body } = await spotifyClient.getPlaylistTracks(
-    SPOTIFY_PLAYLIST_ID as string,
+    process.env.SPOTIFY_PLAYLIST_ID,
     {
       // luv 2 recreate graphql in rest
       // 4.3kb payload with this param vs 29.7 kb without it (85.5% reduction)
