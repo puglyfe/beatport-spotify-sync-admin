@@ -1,14 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import spotifyClient from '@src/lib/spotify';
-import {
-  ReplacePlaylistTracksRequest,
-  ReplacePlaylistTracksResponse,
-} from '@src/types/requests';
+import { ReplacePlaylistTracksRequest } from '@src/types/requests';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ReplacePlaylistTracksResponse>,
+  res: NextApiResponse,
 ) {
   // Refresh the access token proactively.
   // Some day I'll implement retries (jk no I won't).
@@ -31,12 +28,22 @@ export default async function handler(
    * @see https://developer.spotify.com/documentation/web-api/reference/add-tracks-to-playlist
    * @see https://developer.spotify.com/documentation/web-api/reference/remove-tracks-playlist
    */
-  const [_, addPlaylistResponse] = await Promise.all([
-    spotifyClient.removeTracksFromPlaylist(playlistId, [{ uri: oldTrack }]),
-    spotifyClient.addTracksToPlaylist(playlistId, [newTrack], {
-      position,
-    }),
-  ]);
 
-  res.status(200).json(addPlaylistResponse.body);
+  try {
+    await spotifyClient.removeTracksFromPlaylist(playlistId, [
+      { uri: oldTrack },
+    ]);
+    const response = await spotifyClient.addTracksToPlaylist(
+      playlistId,
+      [newTrack],
+      { position },
+    );
+    return res.status(200).json(response.body);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      status: 500,
+      message: 'Unable to update playlist track',
+    });
+  }
 }
