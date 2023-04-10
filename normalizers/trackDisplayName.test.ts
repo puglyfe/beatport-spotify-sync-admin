@@ -7,13 +7,13 @@ import { formatTrackDisplayName } from './trackDisplayName';
 describe('formatTrackDisplayName', () => {
   test('should format the display name of a beatport track', () => {
     expect(formatTrackDisplayName(beatportTrackSingle)).toEqual(
-      'Montcalm - Relieve Me',
+      'Amtrac - IDKILY',
     );
   });
 
   test('should format the display name of a spotify track', () => {
     expect(formatTrackDisplayName(spotifyTrackSingle)).toEqual(
-      'Montcalm - Relieve Me',
+      "Franky Rizardo - I'm Feelin'",
     );
   });
 });
