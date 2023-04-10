@@ -57,12 +57,10 @@ const OrphanTracksContainer = () => {
 
   const onTrackSelect = async ({ uri }: SpotifyTrack): Promise<void> => {
     if (trackToAdd) {
-      await Promise.all([
-        // Add the track to the playlist.
-        await addTrack({ uri }),
-        // update the `spotifyUri` property to remove it from the orphan list.
-        await updateRecord({ ...trackToAdd, spotifyUri: uri }),
-      ]);
+      // Add the track to the playlist.
+      await addTrack({ uri });
+      // update the `spotifyUri` property to remove it from the orphan list.
+      await updateRecord({ ...trackToAdd, spotifyUri: uri });
 
       // TODO: Trigger a refresh of the playlist data via global `mutate`
 

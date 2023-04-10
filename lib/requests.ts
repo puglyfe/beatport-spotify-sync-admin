@@ -26,7 +26,11 @@ const updateTrackEntry = async (
       'Content-Type': 'application/json',
     },
   });
-  return await res.json();
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(result.message);
+  }
+  return result;
 };
 
 //////////////////////////////
@@ -43,7 +47,11 @@ const searchTrack = async (
     ...((artists || track) && { extendedMix: extendedMix.toString() }),
   });
   const res = await fetch(`${url}?${queryParams}`);
-  return await res.json();
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(result.message);
+  }
+  return result;
 };
 
 const addTrackToPlaylist = async (
@@ -57,7 +65,11 @@ const addTrackToPlaylist = async (
       'Content-Type': 'application/json',
     },
   });
-  return await res.json();
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(result.message);
+  }
+  return result;
 };
 
 const updatePlaylistTrack = async (
@@ -71,7 +83,11 @@ const updatePlaylistTrack = async (
       'Content-Type': 'application/json',
     },
   });
-  return await res.json();
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(result.message);
+  }
+  return result;
 };
 
 const playTrack = async (
