@@ -22,7 +22,7 @@ const buttonStyles = (theme: MantineTheme): CSSObject => ({
   opacity: 0.1,
   transition: `opacity 0.1s ${theme.transitionTimingFunction}`,
 
-  '&:hover': {
+  '&:hover, &:focus': {
     opacity: 1,
   },
 });
@@ -34,11 +34,12 @@ const PlaylistTracks = ({ onEditTrack, tracks }: PlaylistTracksProps) => {
   );
 
   return (
-    <List type="ordered">
+    <List type="ordered" spacing={'0.25rem'}>
       {tracks.map((track, index) => (
         <List.Item key={track.id}>
           <Group spacing="sm" noWrap>
             <UnstyledButton
+              aria-label={`Play ${track.name}`}
               onClick={() => triggerPlayTrack({ uri: track.uri })}
               title={`Play ${track.name}`}
             >
@@ -52,6 +53,7 @@ const PlaylistTracks = ({ onEditTrack, tracks }: PlaylistTracksProps) => {
             </UnstyledButton>
             <span>{formatTrackDisplayName(track)}</span>
             <ActionIcon
+              aria-label="Replace track"
               onClick={() => onEditTrack(track, index)}
               title="Replace track"
               radius="xl"

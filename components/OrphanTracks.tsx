@@ -19,7 +19,7 @@ const buttonStyles = (theme: MantineTheme): CSSObject => ({
   opacity: 0.1,
   transition: `opacity 0.1s ${theme.transitionTimingFunction}`,
 
-  '&:hover': {
+  '&:hover, &:focus': {
     opacity: 1,
   },
 });
