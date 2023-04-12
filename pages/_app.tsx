@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
@@ -6,6 +7,10 @@ import { SWRConfig } from 'swr';
 import '@src/styles/globals.css';
 
 import fetcher from '@src/lib/fetch';
+
+if (process.env.NEXT_PUBLIC_USE_MOCKS === 'true') {
+  require('@src/mocks');
+}
 
 export default function App({
   Component,
@@ -25,6 +30,7 @@ export default function App({
             colorScheme: 'dark',
           }}
         >
+          <Notifications />
           <Component {...pageProps} />
         </MantineProvider>
       </SessionProvider>
