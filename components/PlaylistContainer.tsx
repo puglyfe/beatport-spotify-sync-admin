@@ -1,5 +1,6 @@
 import { Loader, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
 import { useState } from 'react';
 import type { Key } from 'swr';
 import useSWRInfinite from 'swr/infinite';
@@ -34,7 +35,23 @@ const PlaylistContainer = () => {
     any,
     Key,
     ReplacePlaylistTracksRequest
-  >('/api/spotify/updatePlaylistTrack', updatePlaylistTrack);
+  >('/api/spotify/updatePlaylistTrack', updatePlaylistTrack, {
+    throwOnError: false,
+    onError: () => {
+      notifications.show({
+        autoClose: false,
+        color: 'red',
+        title: 'Uh oh',
+        message: 'Unable to add track 🤦‍♂️',
+      });
+    },
+    onSuccess: () => {
+      notifications.show({
+        title: 'Success',
+        message: 'Track added successfully 🕺',
+      });
+    },
+  });
 
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -78,17 +95,14 @@ const PlaylistContainer = () => {
   };
 
   // Flatten the data array into a single array of tracks.
-  const tracks = data?.reduce(
-    (acc, res) => [...acc, ...(res.tracks ?? [])],
-    [] as SpotifyTrack[],
-  );
+  const tracks = data?.flatMap(({ tracks }) => tracks) || [];
 
   if (error) return <p>Failed to load</p>;
 
   return (
     <div>
       <h2>Spotify Playlist</h2>
-      <PlaylistTracks tracks={tracks ?? []} onEditTrack={onEditTrack} />
+      <PlaylistTracks tracks={tracks} onEditTrack={onEditTrack} />
       {isLoading ? <Loader variant="bars" /> : null}
       {!isLoading && tracks?.length === 0 ? <p>No tracks...</p> : null}
       <Modal
