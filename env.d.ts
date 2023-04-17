@@ -5,6 +5,7 @@ namespace NodeJS {
 
     NEXTAUTH_URL: string;
     NEXTAUTH_SECRET: string;
+    NEXT_PUBLIC_USE_MOCKS: string;
 
     EMAIL_ALLOWLIST: string;
 
