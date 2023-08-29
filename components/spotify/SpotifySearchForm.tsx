@@ -2,7 +2,7 @@ import { Button, Checkbox, TextInput } from '@mantine/core';
 
 import { SpotifySearchQuery } from '@src/types/tracks';
 
-type SpotifySearchFormProps = {
+export type SpotifySearchFormProps = {
   isLoading: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit(e: React.FormEvent<HTMLFormElement>): void;
