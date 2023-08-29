@@ -13,6 +13,6 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    globalSetup: ['./tests/setupTests.ts', './tests/setupHooks.ts'],
+    setupFiles: ['./tests/setupTests.ts', './tests/setupHooks.ts'],
   },
 });

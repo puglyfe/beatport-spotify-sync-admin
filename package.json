@@ -40,7 +40,7 @@
     "jsdom": "^22.1.0",
     "msw": "^1.2.1",
     "typescript": "4.9.5",
-    "vitest": "^0.29.8"
+    "vitest": "^0.34.3"
   },
   "msw": {
     "workerDirectory": "public"
