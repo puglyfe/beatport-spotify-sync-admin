@@ -13,7 +13,7 @@ import React from 'react';
 import { formatTrackDisplayName } from '@src/normalizers/trackDisplayName';
 import type { SpotifyTrack } from '@src/types/tracks';
 
-type SpotifySearchResultsProps = {
+export type SpotifySearchResultsProps = {
   hasSearched: boolean;
   isLoading: boolean;
   tracks: SpotifyTrack[];
