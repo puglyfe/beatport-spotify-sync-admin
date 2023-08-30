@@ -50,4 +50,19 @@ export const handlers = [
       }),
     );
   }),
+
+  rest.get('/api/auth/session', (_req, res, ctx) => {
+    console.log('bing bong');
+    return res(
+      ctx.json({
+        user: {
+          name: 'Guy Fieri',
+          email: 'guy@flavortown.biz',
+          image:
+            'https://lh3.googleusercontent.com/a/AAcHTtfMYT7znBO8LHZjkO2QXToUKcRoL2c8ir-FPLQIBfpAeEY=s96-c',
+        },
+        expires: '2023-09-28T03:21:12.109Z',
+      }),
+    );
+  }),
 ];
