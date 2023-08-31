@@ -19,8 +19,16 @@ const SpotifySearchForm = ({
 }: SpotifySearchFormProps) => {
   const isDisabled = !values.artists && !values.track;
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (onSubmit) {
+      onSubmit(event);
+    }
+  };
+
   return (
-    <form aria-label={ariaLabel} onSubmit={onSubmit}>
+    <form aria-label={ariaLabel} onSubmit={handleSubmit}>
       <TextInput
         label="Artists"
         name="artists"

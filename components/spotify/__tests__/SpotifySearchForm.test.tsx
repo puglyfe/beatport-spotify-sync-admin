@@ -1,11 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, test, vi } from 'vitest';
 
 import SpotifySearchForm, {
   SpotifySearchFormProps,
 } from '../SpotifySearchForm';
 
 const DEFAULT_PROPS: SpotifySearchFormProps = {
+  ariaLabel: '',
   isLoading: false,
   onChange: () => {},
   onSubmit: () => {},
@@ -31,5 +33,23 @@ describe('<SpotifySearchForm />', () => {
     render(<SpotifySearchForm {...testProps} />);
     const submitBtn = screen.getByRole('button', { name: /search/i });
     expect(submitBtn).toBeDisabled();
+  });
+
+  test('handles submissions', async () => {
+    const testSearch = {
+      artists: 'Daft Punk',
+      track: 'One More Time',
+      extendedMix: false,
+    };
+    const onSubmit = vi.fn();
+    const testProps: SpotifySearchFormProps = {
+      ...DEFAULT_PROPS,
+      values: testSearch,
+      onSubmit,
+    };
+    const user = userEvent.setup();
+    render(<SpotifySearchForm {...testProps} />);
+    await user.click(screen.getByRole('button', { name: /search/i }));
+    expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 });

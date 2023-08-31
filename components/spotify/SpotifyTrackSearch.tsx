@@ -33,7 +33,6 @@ const SpotifyTrackSearch = ({
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     trigger(query);
   };
 
