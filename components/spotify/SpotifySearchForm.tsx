@@ -2,7 +2,8 @@ import { Button, Checkbox, TextInput } from '@mantine/core';
 
 import { SpotifySearchQuery } from '@src/types/tracks';
 
-type SpotifySearchFormProps = {
+export type SpotifySearchFormProps = {
+  ariaLabel: string;
   isLoading: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit(e: React.FormEvent<HTMLFormElement>): void;
@@ -10,6 +11,7 @@ type SpotifySearchFormProps = {
 };
 
 const SpotifySearchForm = ({
+  ariaLabel,
   isLoading,
   onChange,
   onSubmit,
@@ -17,8 +19,16 @@ const SpotifySearchForm = ({
 }: SpotifySearchFormProps) => {
   const isDisabled = !values.artists && !values.track;
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (onSubmit) {
+      onSubmit(event);
+    }
+  };
+
   return (
-    <form onSubmit={onSubmit}>
+    <form aria-label={ariaLabel} onSubmit={handleSubmit}>
       <TextInput
         label="Artists"
         name="artists"

@@ -9,7 +9,7 @@ import type { SpotifySearchQuery, SpotifyTrack } from '@src/types/tracks';
 import SpotifySearchForm from './SpotifySearchForm';
 import SpotifySearchResults from './SpotifySearchResults';
 
-type SpotifyTrackSearchProps = {
+export type SpotifyTrackSearchProps = {
   initialValues?: SpotifySearchQuery;
   onTrackSelect?: (track: SpotifyTrack) => void;
 };
@@ -33,7 +33,6 @@ const SpotifyTrackSearch = ({
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     trigger(query);
   };
 
@@ -51,6 +50,7 @@ const SpotifyTrackSearch = ({
   return (
     <>
       <SpotifySearchForm
+        ariaLabel="Search for a track"
         isLoading={isMutating}
         onChange={handleChange}
         onSubmit={handleSubmit}

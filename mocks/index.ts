@@ -1,5 +1,5 @@
 async function initMocks() {
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' || process.env.VITEST) {
     const { server } = await import('./server');
     server.listen();
   } else {
