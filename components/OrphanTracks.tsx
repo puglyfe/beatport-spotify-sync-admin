@@ -10,7 +10,7 @@ import { IconPlus } from '@tabler/icons-react';
 import { formatTrackDisplayName } from '@src/normalizers/trackDisplayName';
 import { BeatportTrack } from '@src/types/tracks';
 
-type OrphanTracksProps = {
+export type OrphanTracksProps = {
   onEditTrack: (track: BeatportTrack) => void;
   tracks: BeatportTrack[];
 };
