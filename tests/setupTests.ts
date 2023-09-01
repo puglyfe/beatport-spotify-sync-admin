@@ -1,7 +1,10 @@
+// eslint-disable-next-line testing-library/no-manual-cleanup
 import { cleanup } from '@testing-library/react';
-import { afterAll, afterEach, beforeEach, expect } from 'vitest';
+import { afterAll, afterEach, beforeEach } from 'vitest';
 import 'vitest-dom/extend-expect';
 import 'whatwg-fetch';
+
+import './setupResizeObserver';
 
 import '@src/mocks';
 import { server } from '@src/mocks/server';
@@ -17,17 +20,3 @@ afterEach(() => {
 afterAll(() => {
   server.close();
 });
-
-class ResizeObserverStub {
-  observe() {
-    // do nothing
-  }
-  unobserve() {
-    // do nothing
-  }
-  disconnect() {
-    // do nothing
-  }
-}
-
-window.ResizeObserver = window.ResizeObserver || ResizeObserverStub;
