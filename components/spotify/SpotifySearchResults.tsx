@@ -46,6 +46,7 @@ const SpotifySearchResults = ({
               <Group spacing="sm" noWrap>
                 {/* Link to the track on Spotify to help identify canonical releases. */}
                 <a
+                  aria-label={`View ${track.name} on Spotify`}
                   href={track.spotifyUrl}
                   rel="noopener noreferrer"
                   target="_blank"

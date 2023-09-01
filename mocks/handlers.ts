@@ -1,7 +1,11 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
 
-import { firebaseTrackCollection, spotifyTrackCollection } from '@src/fixtures';
+import {
+  firebaseTrackCollection,
+  spotifyTrackCollection,
+  spotifyTrackSingle,
+} from '@src/fixtures';
 
 export const handlers = [
   rest.get('api/spotify/getPlaylistTracks', (req, res, ctx) => {
@@ -33,7 +37,7 @@ export const handlers = [
     // TODO: support returning no results.
     return res(
       ctx.json({
-        tracks: spotifyTrackCollection,
+        tracks: [spotifyTrackSingle],
       }),
     );
   }),
