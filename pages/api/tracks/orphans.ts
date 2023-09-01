@@ -21,7 +21,10 @@ export default async function handler(
     .once('value');
 
   const tracksData = Object.values(
-    snapshot.val() as Record<string, TrackEntryData | LegacyTrackEntryData>,
+    (snapshot.val() as Record<
+      string,
+      TrackEntryData | LegacyTrackEntryData
+    > | null) || {},
   ).map(beatportTrack);
 
   res.status(200).json(tracksData);

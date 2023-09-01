@@ -29,6 +29,15 @@ export const handlers = [
     return res(ctx.json(firebaseTrackCollection));
   }),
 
+  rest.get('api/spotify/searchTracks', (_req, res, ctx) => {
+    // TODO: support returning no results.
+    return res(
+      ctx.json({
+        tracks: spotifyTrackCollection,
+      }),
+    );
+  }),
+
   rest.get('https://i.scdn.co/image/*', (req) => {
     return req.passthrough();
   }),

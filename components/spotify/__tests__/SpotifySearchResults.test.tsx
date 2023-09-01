@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
+import { spotifyTrackCollection } from '@src/fixtures';
+
 import SpotifySearchResults, {
   SpotifySearchResultsProps,
 } from '../SpotifySearchResults';
@@ -19,7 +21,7 @@ describe('<SpotifySearchResults />', () => {
       hasSearched: false,
     };
     render(<SpotifySearchResults {...testProps} />);
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    expect(screen.queryByRole('listitem')).not.toBeInTheDocument();
     expect(screen.queryByText(/no results/i)).not.toBeInTheDocument();
   });
 
@@ -33,10 +35,20 @@ describe('<SpotifySearchResults />', () => {
     expect(screen.queryByText(/no results/i)).not.toBeInTheDocument();
   });
 
-  test('renders an empty state when there are no results', async () => {
+  test('renders an empty state when there are no results', () => {
     render(<SpotifySearchResults {...DEFAULT_PROPS} />);
     expect(screen.getByText(/no results/i)).toBeInTheDocument();
   });
 
-  test.todo('renders a list of search results');
+  test('renders a list of search results', () => {
+    const testProps = {
+      ...DEFAULT_PROPS,
+      tracks: spotifyTrackCollection,
+    };
+    render(<SpotifySearchResults {...testProps} />);
+    expect(screen.queryByText(/no results/i)).not.toBeInTheDocument();
+    expect(screen.getAllByRole('listitem')).toHaveLength(
+      spotifyTrackCollection.length,
+    );
+  });
 });
