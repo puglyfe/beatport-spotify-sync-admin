@@ -50,7 +50,7 @@ describe('<SpotifySearchForm />', () => {
     ).toBeInTheDocument();
   });
 
-  test.todo('shows a loading state while searching', async () => {
+  test('shows a loading state while searching', async () => {
     const { artists, name: track } = spotifyTrackSingle;
     const user = userEvent.setup();
 
@@ -62,10 +62,13 @@ describe('<SpotifySearchForm />', () => {
 
     const submitButton = screen.getByRole('button', { name: /search/i });
     expect(submitButton).not.toBeDisabled();
+
     await user.click(submitButton);
-    expect(submitButton).toHaveAttribute('aria-disabled', 'true');
     await waitFor(() =>
-      expect(submitButton).toHaveAttribute('aria-disabled', 'false'),
+      expect(submitButton).toHaveAttribute('data-loading', 'true'),
+    );
+    await waitFor(() =>
+      expect(submitButton).not.toHaveAttribute('data-loading', 'true'),
     );
   });
 });
