@@ -11,3 +11,5 @@ class ResizeObserverStub {
 }
 
 window.ResizeObserver = window.ResizeObserver || ResizeObserverStub;
+
+export {};
