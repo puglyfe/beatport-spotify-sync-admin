@@ -8,6 +8,9 @@ import type {
 } from '@src/types/requests';
 import { BeatportTrack, SpotifySearchQuery } from '@src/types/tracks';
 
+const getBaseUrl = () =>
+  process.env.NODE_ENV === 'test' ? 'http://localhost:3000' : '';
+
 //////////////////////////////
 // Firebase requests
 //////////////////////////////
@@ -19,7 +22,7 @@ const updateTrackEntry = async (
   { arg }: { arg: UpdateTrackEntryArg },
 ) => {
   const { id: trackId } = arg;
-  const res = await fetch(`${url}/${trackId}`, {
+  const res = await fetch(`${getBaseUrl()}/${url}/${trackId}`, {
     method: 'POST',
     body: JSON.stringify(arg),
     headers: {
@@ -46,7 +49,7 @@ const searchTrack = async (
     ...(track && { track }),
     ...((artists || track) && { extendedMix: extendedMix.toString() }),
   });
-  const res = await fetch(`${url}?${queryParams}`);
+  const res = await fetch(`${getBaseUrl()}/${url}?${queryParams}`);
   const result = await res.json();
   if (!res.ok) {
     throw new Error(result.message);
@@ -58,7 +61,7 @@ const addTrackToPlaylist = async (
   url: string,
   { arg }: { arg: AddPlaylistTrackRequest },
 ) => {
-  const res = await fetch(url, {
+  const res = await fetch(`${getBaseUrl()}/${url}`, {
     method: 'POST',
     body: JSON.stringify(arg),
     headers: {
@@ -76,7 +79,7 @@ const updatePlaylistTrack = async (
   url: string,
   { arg }: { arg: ReplacePlaylistTracksRequest },
 ) => {
-  const res = await fetch(url, {
+  const res = await fetch(`${getBaseUrl()}/${url}`, {
     method: 'POST',
     body: JSON.stringify(arg),
     headers: {
@@ -94,7 +97,7 @@ const playTrack = async (
   url: string,
   { arg: { uri } }: { arg: { uri: string } },
 ) => {
-  const response = await fetch(url, {
+  const response = await fetch(`${getBaseUrl()}/${url}`, {
     method: 'PUT',
     body: JSON.stringify({ uri }),
     headers: {

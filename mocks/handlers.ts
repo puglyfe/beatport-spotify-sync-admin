@@ -8,7 +8,7 @@ import {
 } from '@src/fixtures';
 
 export const handlers = [
-  rest.get('api/spotify/getPlaylistTracks', (req, res, ctx) => {
+  rest.get('*/api/spotify/getPlaylistTracks', (req, res, ctx) => {
     if (
       Number(req.url.searchParams.get('offset')) >=
       spotifyTrackCollection.length
@@ -29,11 +29,11 @@ export const handlers = [
     );
   }),
 
-  rest.get('api/tracks/orphans', (_req, res, ctx) => {
+  rest.get('*/api/tracks/orphans', (_req, res, ctx) => {
     return res(ctx.json(firebaseTrackCollection));
   }),
 
-  rest.get('api/spotify/searchTracks', (_req, res, ctx) => {
+  rest.get('*/api/spotify/searchTracks', (_req, res, ctx) => {
     // TODO: support returning no results.
     return res(
       ctx.json({
@@ -46,7 +46,7 @@ export const handlers = [
     return req.passthrough();
   }),
 
-  // rest.post('api/spotify/updatePlaylistTrack', (_req, res, ctx) => {
+  // rest.post('*/api/spotify/updatePlaylistTrack', (_req, res, ctx) => {
   //   return res(
   //     ctx.json({
   //       snapshotId: 'abc1123',
@@ -54,7 +54,7 @@ export const handlers = [
   //   );
   // }),
 
-  rest.post('api/spotify/updatePlaylistTrack', (_req, res, ctx) => {
+  rest.post('*/api/spotify/updatePlaylistTrack', (_req, res, ctx) => {
     return res(
       ctx.status(500),
       ctx.json({
@@ -64,7 +64,7 @@ export const handlers = [
     );
   }),
 
-  rest.get('/api/auth/session', (_req, res, ctx) => {
+  rest.get('/*/api/auth/session', (_req, res, ctx) => {
     console.log('bing bong');
     return res(
       ctx.json({
