@@ -1,8 +1,6 @@
-// eslint-disable-next-line import/order
 import admin, { ServiceAccount } from 'firebase-admin';
 
-// eslint-disable-next-line import/order
-import serviceAccount from '@src/secrets/beatport-spotify-sync-firebase-adminsdk-ag3lx-d080a895dd.json';
+import serviceAccount from '../secrets/beatport-spotify-sync-firebase-adminsdk-ag3lx-d080a895dd.json';
 
 if (!admin.apps.length) {
   try {
