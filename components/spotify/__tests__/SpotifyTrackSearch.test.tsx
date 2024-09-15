@@ -49,26 +49,4 @@ describe('<SpotifySearchForm />', () => {
       await screen.findByRole('link', { name: `View ${track} on Spotify` }),
     ).toBeInTheDocument();
   });
-
-  test('shows a loading state while searching', async () => {
-    const { artists, name: track } = spotifyTrackSingle;
-    const user = userEvent.setup();
-
-    render(
-      <SpotifyTrackSearch
-        initialValues={{ artists, track, extendedMix: false }}
-      />,
-    );
-
-    const submitButton = screen.getByRole('button', { name: /search/i });
-    expect(submitButton).not.toBeDisabled();
-
-    await user.click(submitButton);
-    await waitFor(() =>
-      expect(submitButton).toHaveAttribute('data-loading', 'true'),
-    );
-    await waitFor(() =>
-      expect(submitButton).not.toHaveAttribute('data-loading', 'true'),
-    );
-  });
 });

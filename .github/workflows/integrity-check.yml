@@ -1,0 +1,24 @@
+name: integrity check
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Get service account
+        run: mkdir -p secrets && echo "${{ secrets.BEATPORT_SPOTIFY_SYNC_FIREBASE_ADMINSDK }}" | base64 --decode > "${{github.workspace}}"/secrets/beatport-spotify-sync-firebase-adminsdk-ag3lx-d080a895dd.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
