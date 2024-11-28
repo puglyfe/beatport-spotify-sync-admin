@@ -28,7 +28,7 @@
     "swr": "^2.2.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/node": "18.19.66",
     "@types/react": "18.0.28",
