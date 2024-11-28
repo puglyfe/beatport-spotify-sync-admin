@@ -8,8 +8,7 @@ import type {
 } from '@src/types/requests';
 import { BeatportTrack, SpotifySearchQuery } from '@src/types/tracks';
 
-const getBaseUrl = () =>
-  process.env.NODE_ENV === 'test' ? 'http://localhost:3000' : '';
+const getBaseUrl = () => 'http://localhost:3000';
 
 //////////////////////////////
 // Firebase requests
