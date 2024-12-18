@@ -20,7 +20,7 @@
     "@mantine/notifications": "^6.0.20",
     "@tabler/icons-react": "^2.34.0",
     "firebase-admin": "^11.5.0",
-    "next": "13.2.4",
+    "next": "14.2.15",
     "next-auth": "^4.23.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
